@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="image/x-icon" rel="shortcut icon" href="" id="fav"/>
+    <title>Time</title>
+</head>
+<body>
+
+    <p id="main" style="font-family: Arial, Helvetica, sans-serif;"></p>
+    
+</body>
+
+<script>
+
+    Date.prototype.addHours = function(h) {
+        this.setTime(this.getTime() + (h*60*60*1000));
+        return this;
+    }
+
+    var timeDifference = -8;
+
+    var canvas = document.createElement('canvas');
+    canvas.width = 16;canvas.height = 16;
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#000';
+    ctx.font = '10px "Segoe UI"';
+
+    update = () => {
+        let now = new Date();
+        let other = now.addHours(timeDifference)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillText(String(other.getHours()).padStart(2, '0'), 3, 7);
+        ctx.fillText(String(other.getMinutes()).padStart(2, '0'), 3, 16);
+    
+        document.getElementById('fav').href = canvas.toDataURL("image/x-icon");
+        document.getElementById('main').innerText = `Time in the UK is ${other.toLocaleTimeString()}`;
+    }
+
+    setInterval(update, 1000)
+
+</script>
+</html>
